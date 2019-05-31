@@ -22,6 +22,12 @@ describe('Route class', () => { // eslint-disable-line jest/lowercase-name
 	});
 
 	describe('constructor', () => {
+		it('initializes undefined name', () => {
+			const route = new Route();
+			expect(route).toHaveProperty('name');
+			expect(route.name).toBeUndefined();
+		});
+
 		it('initializes undefined parent', () => {
 			const route = new Route();
 			expect(route).toHaveProperty('parent');
