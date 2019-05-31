@@ -16,7 +16,7 @@ const spy = jest.fn;
 
 // Tests
 
-describe('Route#attachChild()', () => { // eslint-disable-line jest/lowercase-name
+describe('.attachChild()', () => {
 	it('prototype method exists', () => {
 		const route = new Route();
 		expect(route.attachChild).toBeFunction();
