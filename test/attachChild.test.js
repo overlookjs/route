@@ -1,7 +1,7 @@
 /* --------------------
  * @overlook/route module
  * Tests
- * `Route#attachChild()` prototype method
+ * `.attachChild()` prototype method
  * ------------------*/
 
 'use strict';
