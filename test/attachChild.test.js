@@ -66,7 +66,7 @@ describe('.attachChild()', () => {
 
 			expect(
 				() => route.init()
-			).toThrowWithMessage(Error, 'Cannot attach children after initialization');
+			).toThrowWithMessage(Error, 'Cannot attach children after initialization (router path /)');
 		});
 
 		it('throws error if called after parent initialized', () => {
