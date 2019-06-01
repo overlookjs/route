@@ -17,66 +17,64 @@ const spy = jest.fn;
 // Tests
 
 describe('.attachChild()', () => {
+	let route;
+	beforeEach(() => {
+		route = new Route();
+	});
+
 	it('prototype method exists', () => {
-		const route = new Route();
 		expect(route.attachChild).toBeFunction();
 	});
 
 	it('sets `.parent` on child', () => {
-		const parent = new Route();
 		const child = new Route();
-		parent.attachChild(child);
-		expect(child.parent).toBe(parent);
+		route.attachChild(child);
+		expect(child.parent).toBe(route);
 	});
 
 	it('adds child to `.children` on parent', () => {
-		const parent = new Route();
 		const child = new Route();
-		parent.attachChild(child);
-		expect(parent.children).toIncludeSameMembers([child]);
+		route.attachChild(child);
+		expect(route.children).toIncludeSameMembers([child]);
 	});
 
 	it('calls `child.attachTo()` with parent', () => {
-		const parent = new Route();
 		const child = new Route();
 		child.attachTo = spy();
-		parent.attachChild(child);
+		route.attachChild(child);
 		expect(child.attachTo).toHaveBeenCalledTimes(1);
-		expect(child.attachTo).toHaveBeenCalledWith(parent);
+		expect(child.attachTo).toHaveBeenCalledWith(route);
 	});
 
 	describe('during/after initialization', () => {
 		it('does not throw error if called in `.initRoute`', () => {
-			const parent = new Route();
 			const child = new Route();
-			parent.initRoute = function() {
+			route.initRoute = function() {
 				this.attachChild(child);
 			};
-			parent.init();
+			route.init();
 
 			// Check child attached
-			expect(child.parent).toBe(parent);
+			expect(child.parent).toBe(route);
 		});
 
 		it('throws error if called in `.initChildren`', () => {
-			const parent = new Route();
 			const child = new Route();
-			parent.initChildren = function() {
+			route.initChildren = function() {
 				this.attachChild(child);
 			};
 
 			expect(
-				() => parent.init()
+				() => route.init()
 			).toThrowWithMessage(Error, 'Cannot attach children after initialization');
 		});
 
 		it('throws error if called after parent initialized', () => {
-			const parent = new Route();
-			parent.init();
+			route.init();
 			const child = new Route();
 
 			expect(
-				() => parent.attachChild(child)
+				() => route.attachChild(child)
 			).toThrowWithMessage(Error, 'Cannot attach children after initialization');
 		});
 	});
