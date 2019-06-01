@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.1
+
+Bug fixes:
+
+* Correct debug context when calling `.init` method of children
+
+Docs:
+
+* Fix changlog [fix]
+
 ## 0.3.0
 
 Breaking changes:
