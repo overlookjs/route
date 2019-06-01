@@ -126,7 +126,7 @@ describe('`.debugError()`', () => {
 	});
 });
 
-describe('`.debugDelegate()`', () => {
+describe('`.debugZone()`', () => {
 	let route;
 	beforeEach(() => {
 		route = new Route();
@@ -135,7 +135,7 @@ describe('`.debugDelegate()`', () => {
 	// Sync return values
 	it('passes through return value unchanged', () => {
 		const res = {};
-		const ret = route.debugDelegate(() => res);
+		const ret = route.debugZone(() => res);
 		expect(ret).toBe(res);
 		expect(ret).toEqual({});
 	});
@@ -143,7 +143,7 @@ describe('`.debugDelegate()`', () => {
 	describe('catches and tags thrown error in', () => {
 		it('root', () => {
 			expect(() => (
-				route.debugDelegate(() => { throw new Error('xyz'); })
+				route.debugZone(() => { throw new Error('xyz'); })
 			)).toThrowWithMessage(Error, 'xyz (router path /)');
 		});
 
@@ -152,7 +152,7 @@ describe('`.debugDelegate()`', () => {
 			route.attachChild(child);
 
 			expect(() => (
-				child.debugDelegate(() => { throw new Error('xyz'); })
+				child.debugZone(() => { throw new Error('xyz'); })
 			)).toThrowWithMessage(Error, 'xyz (router path /abc)');
 		});
 
@@ -163,7 +163,7 @@ describe('`.debugDelegate()`', () => {
 			child.attachChild(child2);
 
 			expect(() => (
-				child2.debugDelegate(() => { throw new Error('xyz'); })
+				child2.debugZone(() => { throw new Error('xyz'); })
 			)).toThrowWithMessage(Error, 'xyz (router path /abc/def)');
 		});
 	});
@@ -173,7 +173,7 @@ describe('`.debugDelegate()`', () => {
 		errIn[ROUTER_PATH] = '/abc';
 
 		const err = tryCatch(() => {
-			route.debugDelegate(() => { throw errIn; });
+			route.debugZone(() => { throw errIn; });
 		});
 
 		expect(err).toBe(errIn);
@@ -184,7 +184,7 @@ describe('`.debugDelegate()`', () => {
 	// Promises
 	it('passes through promise with resolve value unchanged', async () => {
 		const res = {};
-		const promise = route.debugDelegate(() => Promise.resolve(res));
+		const promise = route.debugZone(() => Promise.resolve(res));
 		expect(promise).toBeInstanceOf(Promise);
 		const ret = await promise;
 		expect(ret).toBe(res);
@@ -194,7 +194,7 @@ describe('`.debugDelegate()`', () => {
 	describe('catches and tags rejected promise in', () => {
 		it('root', async () => {
 			const errIn = new Error('xyz');
-			const promise = route.debugDelegate(() => Promise.reject(errIn));
+			const promise = route.debugZone(() => Promise.reject(errIn));
 			expect(promise).toBeInstanceOf(Promise);
 			const err = await rejectionReason(promise);
 
@@ -208,7 +208,7 @@ describe('`.debugDelegate()`', () => {
 			route.attachChild(child);
 
 			const errIn = new Error('xyz');
-			const promise = child.debugDelegate(() => Promise.reject(errIn));
+			const promise = child.debugZone(() => Promise.reject(errIn));
 			expect(promise).toBeInstanceOf(Promise);
 			const err = await rejectionReason(promise);
 
@@ -224,7 +224,7 @@ describe('`.debugDelegate()`', () => {
 			child.attachChild(child2);
 
 			const errIn = new Error('xyz');
-			const promise = child2.debugDelegate(() => Promise.reject(errIn));
+			const promise = child2.debugZone(() => Promise.reject(errIn));
 			expect(promise).toBeInstanceOf(Promise);
 			const err = await rejectionReason(promise);
 
@@ -237,7 +237,7 @@ describe('`.debugDelegate()`', () => {
 	it('ignores promise rejections which are already tagged', async () => {
 		const errIn = new Error('xyz (router path /abc)');
 		errIn[ROUTER_PATH] = '/abc';
-		const promise = route.debugDelegate(() => Promise.reject(errIn));
+		const promise = route.debugZone(() => Promise.reject(errIn));
 		expect(promise).toBeInstanceOf(Promise);
 		const err = await rejectionReason(promise);
 

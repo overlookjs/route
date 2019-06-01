@@ -77,7 +77,7 @@ class MyRoute extends Route {
 * [`.attachChild( child )`](#building-a-router-tree)
 * [`.attachTo( parent )`](#attachto-parent)
 * [`.debugError( err )`](#debugging)
-* [`.debugDelegate( fn )`](#debugging)
+* [`.debugZone( fn )`](#debugging)
 
 and one static method:
 
@@ -378,7 +378,7 @@ This is not very helpful for debugging.
 
 #### Solution
 
-`Route` instances have 2 methods which add debug info to errors, `.debugError()` and `.debugDelegate()`.
+`Route` instances have 2 methods which add debug info to errors, `.debugError()` and `.debugZone()`.
 
 Any errors thrown will be tagged with:
 
@@ -393,7 +393,7 @@ These methods are already built in to `.init()` and `.attachChild()`.
 
 Any error thrown in `.init()`, `.initRoute()`, `.initChildren()`, `.attachChild()` or `.attachTo()` will be caught and tagged with debug info as above. You don't need to use the debug methods to get the debug info.
 
-If you create an extension which passes control from one route to another - for example, delegating to children - use `.debugDelegate()` to wrap that call (see [below](#debugdelegate-fn)).
+If you create an extension which passes control from one route to another - for example, delegating to children - use `.debugZone()` to wrap that call (see [below](#debugzone-fn)).
 
 If you create an extension which could provide some additional debug info, use `.debugError()` to add that info to the error object (see [below](#debugerror-err)).
 
@@ -401,7 +401,7 @@ If you create an extension which could provide some additional debug info, use `
 
 It's only required where contol passed from one route to another. Mostly you won't be doing that, so generally there's no need to use the debug methods.
 
-#### `.debugDelegate( fn )`
+#### `.debugZone( fn )`
 
 Executes a function within debug context of the route. Any errors thrown will be tagged with the debug info for that route.
 
@@ -415,7 +415,7 @@ class MyRoute extends Route {
 
     // First child which returns non-null value has handled request
     for (let child of this.children) {
-      res = child.debugDelegate(() => {
+      res = child.debugZone(() => {
         return child.handle( req );
       });
       if (res != null) break;
@@ -428,7 +428,7 @@ class MyRoute extends Route {
 
 #### `.debugError( err )`
 
-`.debugError()` is called by `.debugDelegate()` with any error which occurs in the route. `.debugError()` adds debug info to the error (as described above).
+`.debugError()` is called by `.debugZone()` with any error which occurs in the route. `.debugError()` adds debug info to the error (as described above).
 
 You can extend `.debugError()` to add further debugging info.
 
