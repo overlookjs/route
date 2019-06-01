@@ -46,6 +46,20 @@ describe('.attachChild()', () => {
 		expect(child.attachTo).toHaveBeenCalledWith(route);
 	});
 
+	it('tags error thrown in `child.attachTo()` with child router path', () => {
+		class RouteSubclass extends Route {
+			attachTo(parent) {
+				super.attachTo(parent);
+				throw new Error('xyz');
+			}
+		}
+		const child = new RouteSubclass({name: 'abc'});
+
+		expect(
+			() => route.attachChild(child)
+		).toThrowWithMessage(Error, 'xyz (router path /abc)');
+	});
+
 	describe('during/after initialization', () => {
 		it('does not throw error if called in `.initRoute`', () => {
 			const child = new Route();
@@ -75,7 +89,7 @@ describe('.attachChild()', () => {
 
 			expect(
 				() => route.attachChild(child)
-			).toThrowWithMessage(Error, 'Cannot attach children after initialization');
+			).toThrowWithMessage(Error, 'Cannot attach children after initialization (router path /)');
 		});
 	});
 });
