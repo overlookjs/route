@@ -15,7 +15,8 @@
   },
   "dependencies": {
     "core-util-is": "^1.0.2",
-    "has-own-prop": "^1.0.1"
+    "has-own-prop": "^1.0.1",
+    "is-promise": "^2.1.0"
   },
   "devDependencies": {
     "@overlookmotel/eslint-config": "^3.0.2",
