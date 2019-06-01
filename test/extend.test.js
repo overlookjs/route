@@ -21,45 +21,17 @@ describe('`Route.extend()`', () => {
 		expect(Route.extend).toBeFunction();
 	});
 
-	describe('calls', () => {
-		it('extension function with Route', () => {
-			const fn = spy(R => R);
-			Route.extend(fn);
-			expect(fn).toHaveBeenCalledTimes(1);
-			expect(fn).toHaveBeenCalledWith(Route);
-		});
-
-		it('multiple extension functions each with previous result', () => {
-			class R2 extends Route {}
-			class R3 extends R2 {}
-
-			const fn1 = spy(() => R2),
-				fn2 = spy(() => R3),
-				fn3 = spy(R => R);
-			Route.extend(fn1, fn2, fn3);
-
-			expect(fn1).toHaveBeenCalledTimes(1);
-			expect(fn1).toHaveBeenCalledWith(Route);
-			expect(fn2).toHaveBeenCalledTimes(1);
-			expect(fn2).toHaveBeenCalledWith(R2);
-			expect(fn3).toHaveBeenCalledTimes(1);
-			expect(fn3).toHaveBeenCalledWith(R3);
-		});
+	it('calls extension function with Route', () => {
+		const fn = spy(R => R);
+		Route.extend(fn);
+		expect(fn).toHaveBeenCalledTimes(1);
+		expect(fn).toHaveBeenCalledWith(Route);
 	});
 
-	describe('returns result of extension function', () => {
-		it('with 1 extension', () => {
-			class R2 extends Route {}
-			const ret = Route.extend(() => R2);
-			expect(ret).toBe(R2);
-		});
-
-		it('with multiple extensions', () => {
-			class R2 extends Route {}
-			class R3 extends R2 {}
-			const ret = Route.extend(() => R2, () => R3);
-			expect(ret).toBe(R3);
-		});
+	it('returns result of extension function', () => {
+		class R2 extends Route {}
+		const ret = Route.extend(() => R2);
+		expect(ret).toBe(R2);
 	});
 
 	describe('cache', () => {
