@@ -7,7 +7,8 @@
 'use strict';
 
 // Modules
-const Route = require('../index');
+const Route = require('../index'),
+	{IDENTIFIER} = Route;
 
 // Init
 require('./support');
@@ -19,6 +20,20 @@ const spy = jest.fn;
 describe('Route class', () => { // eslint-disable-line jest/lowercase-name
 	it('is a class', () => {
 		expect(Route).toBeFunction();
+	});
+
+	describe('exports symbols', () => {
+		it.each([['IDENTIFIER'], ['ROUTER_PATH']])(
+			'%s',
+			(key) => {
+				expect(typeof Route[key]).toBe('symbol');
+			}
+		);
+	});
+
+	it('instances have identifier symbol', () => {
+		const route = new Route();
+		expect(route[IDENTIFIER]).toBeTrue();
 	});
 
 	describe('constructor', () => {
