@@ -1,5 +1,19 @@
 # Changelog
 
+## Next
+
+Breaking changes:
+
+* Rename `.debugDelegate` method `.debugZone`
+
+Features:
+
+* `IDENTIFIER` Symbol
+
+Docs:
+
+* Fix missing link
+
 ## 0.2.0
 
 Breaking changes:
