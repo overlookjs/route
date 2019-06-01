@@ -16,7 +16,7 @@ const spy = jest.fn;
 
 // Tests
 
-describe('Route.extend()', () => { // eslint-disable-line jest/lowercase-name
+describe('`Route.extend()`', () => {
 	it('static method exists', () => {
 		expect(Route.extend).toBeFunction();
 	});
