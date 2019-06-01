@@ -81,7 +81,7 @@ class MyRoute extends Route {
 
 and one static method:
 
-* `Route.extend( extension )`
+* [`Route.extend( extension )`](#route-class-extensions)
 
 ### Handling requests
 
