@@ -2,7 +2,7 @@
 
 module.exports = {
 	testEnvironment: 'node',
-	setupTestFrameworkScriptFile: 'jest-extended',
+	setupFilesAfterEnv: ['jest-extended'],
 	coverageDirectory: 'coverage',
 	collectCoverageFrom: [
 		'**/*.js',
