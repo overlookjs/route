@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "core-util-is": "^1.0.2",
-    "has-own-prop": "^1.0.1",
+    "has-own-prop": "^2.0.0",
     "is-promise": "^2.1.0"
   },
   "devDependencies": {
