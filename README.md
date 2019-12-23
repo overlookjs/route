@@ -249,8 +249,8 @@ const animalExtension = function(Route) {
       this[TYPE] = undefined;
     }
 
-    init( app ) {
-      super.init( app );
+    initRoute( app ) {
+      super.initRoute( app );
       if (this[TYPE] === undefined) this[TYPE] = 'mammal';
     }
 
