@@ -298,7 +298,7 @@ const AnimalRoute = animalExtension( Route );
 So if you want to know if a route is has been made from `animalExtension`, you can do:
 
 ```js
-if (route[animalExtension.IDENTIFIER]) {
+if ( route[animalExtension.IDENTIFIER] ) {
   console.log('This route is an animal');
 }
 ```
@@ -415,9 +415,9 @@ class MyRoute extends Route {
 
     // First child which returns non-null value has handled request
     for (let child of this.children) {
-      res = child.debugZone(() => {
+      res = child.debugZone( () => {
         return child.handle( req );
-      });
+      } );
       if (res != null) break;
     }
 
