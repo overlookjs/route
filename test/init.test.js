@@ -93,26 +93,4 @@ describe('`.init()`', () => {
 			).toThrowWithMessage(Error, 'xyz (router path /abc)');
 		});
 	});
-
-	describe("tags error thrown in child's `.init()` method with router path in", () => {
-		it('root route', () => {
-			const child = new Route({name: 'abc'});
-			route.attachChild(child);
-			child.init = () => { throw new Error('xyz'); };
-			expect(
-				() => route.init()
-			).toThrowWithMessage(Error, 'xyz (router path /abc)');
-		});
-
-		it('child route', () => {
-			const child = new Route({name: 'abc'});
-			route.attachChild(child);
-			const child2 = new Route({name: 'def'});
-			child.attachChild(child2);
-			child2.init = () => { throw new Error('xyz'); };
-			expect(
-				() => route.init()
-			).toThrowWithMessage(Error, 'xyz (router path /abc/def)');
-		});
-	});
 });
