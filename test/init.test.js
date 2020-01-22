@@ -78,7 +78,7 @@ describe('`.init()`', () => {
 
 	describe('tags error thrown in `.initChildren()` with router path in', () => {
 		it('root route', () => {
-			route.initRoute = () => { throw new Error('xyz'); };
+			route.initChildren = () => { throw new Error('xyz'); };
 			expect(
 				() => route.init()
 			).toThrowWithMessage(Error, 'xyz (router path /)');
