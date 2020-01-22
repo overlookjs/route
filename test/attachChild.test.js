@@ -7,7 +7,8 @@
 'use strict';
 
 // Modules
-const Route = require('../index');
+const Route = require('../index'),
+	{INIT_ROUTE, INIT_CHILDREN, ATTACH_TO} = Route;
 
 // Init
 require('./support');
@@ -38,18 +39,18 @@ describe('.attachChild()', () => {
 		expect(route.children).toIncludeSameMembers([child]);
 	});
 
-	it('calls `child.attachTo()` with parent', () => {
+	it('calls `child[ATTACH_TO]()` with parent', () => {
 		const child = new Route();
-		child.attachTo = spy();
+		child[ATTACH_TO] = spy();
 		route.attachChild(child);
-		expect(child.attachTo).toHaveBeenCalledTimes(1);
-		expect(child.attachTo).toHaveBeenCalledWith(route);
+		expect(child[ATTACH_TO]).toHaveBeenCalledTimes(1);
+		expect(child[ATTACH_TO]).toHaveBeenCalledWith(route);
 	});
 
-	it('tags error thrown in `child.attachTo()` with child router path', () => {
+	it('tags error thrown in `child[ATTACH_TO]()` with child router path', () => {
 		class RouteSubclass extends Route {
-			attachTo(parent) {
-				super.attachTo(parent);
+			[ATTACH_TO](parent) {
+				super[ATTACH_TO](parent);
 				throw new Error('xyz');
 			}
 		}
@@ -61,9 +62,9 @@ describe('.attachChild()', () => {
 	});
 
 	describe('during/after initialization', () => {
-		it('does not throw error if called in `.initRoute`', () => {
+		it('does not throw error if called in [INIT_ROUTE]', () => {
 			const child = new Route();
-			route.initRoute = function() {
+			route[INIT_ROUTE] = function() {
 				this.attachChild(child);
 			};
 			route.init();
@@ -72,9 +73,9 @@ describe('.attachChild()', () => {
 			expect(child.parent).toBe(route);
 		});
 
-		it('throws error if called in `.initChildren`', () => {
+		it('throws error if called in `[INIT_CHILDREN]`', () => {
 			const child = new Route();
-			route.initChildren = function() {
+			route[INIT_CHILDREN] = function() {
 				this.attachChild(child);
 			};
 

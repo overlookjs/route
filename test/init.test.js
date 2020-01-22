@@ -7,7 +7,8 @@
 'use strict';
 
 // Modules
-const Route = require('../index');
+const Route = require('../index'),
+	{INIT_ROUTE, INIT_CHILDREN} = Route;
 
 // Init
 require('./support');
@@ -31,20 +32,20 @@ describe('`.init()`', () => {
 		expect(ret).toBeUndefined();
 	});
 
-	it('calls `.initRoute()` with value passed to `.init()`', () => {
-		route.initRoute = spy();
+	it('calls `[INIT_ROUTE]()` with value passed to `.init()`', () => {
+		route[INIT_ROUTE] = spy();
 		const app = {};
 		route.init(app);
-		expect(route.initRoute).toHaveBeenCalledTimes(1);
-		expect(route.initRoute).toHaveBeenCalledWith(app);
+		expect(route[INIT_ROUTE]).toHaveBeenCalledTimes(1);
+		expect(route[INIT_ROUTE]).toHaveBeenCalledWith(app);
 	});
 
-	it('calls `.initChildren()` with value passed to `.init()`', () => {
-		route.initChildren = spy();
+	it('calls `[INIT_CHILDREN]()` with value passed to `.init()`', () => {
+		route[INIT_CHILDREN] = spy();
 		const app = {};
 		route.init(app);
-		expect(route.initChildren).toHaveBeenCalledTimes(1);
-		expect(route.initChildren).toHaveBeenCalledWith(app);
+		expect(route[INIT_CHILDREN]).toHaveBeenCalledTimes(1);
+		expect(route[INIT_CHILDREN]).toHaveBeenCalledWith(app);
 	});
 
 	it('calls `.init()` on children with value passed to `.init()`', () => {
@@ -58,9 +59,9 @@ describe('`.init()`', () => {
 		expect(child.init).toHaveBeenCalledWith(app);
 	});
 
-	describe('tags error thrown in `.initRoute()` with router path in', () => {
+	describe('tags error thrown in `[INIT_ROUTE]()` with router path in', () => {
 		it('root route', () => {
-			route.initRoute = () => { throw new Error('xyz'); };
+			route[INIT_ROUTE] = () => { throw new Error('xyz'); };
 			expect(
 				() => route.init()
 			).toThrowWithMessage(Error, 'xyz (router path /)');
@@ -69,16 +70,16 @@ describe('`.init()`', () => {
 		it('child route', () => {
 			const child = new Route({name: 'abc'});
 			route.attachChild(child);
-			child.initRoute = () => { throw new Error('xyz'); };
+			child[INIT_ROUTE] = () => { throw new Error('xyz'); };
 			expect(
 				() => route.init()
 			).toThrowWithMessage(Error, 'xyz (router path /abc)');
 		});
 	});
 
-	describe('tags error thrown in `.initChildren()` with router path in', () => {
+	describe('tags error thrown in `[INIT_CHILDREN]()` with router path in', () => {
 		it('root route', () => {
-			route.initChildren = () => { throw new Error('xyz'); };
+			route[INIT_CHILDREN] = () => { throw new Error('xyz'); };
 			expect(
 				() => route.init()
 			).toThrowWithMessage(Error, 'xyz (router path /)');
@@ -87,7 +88,7 @@ describe('`.init()`', () => {
 		it('child route', () => {
 			const child = new Route({name: 'abc'});
 			route.attachChild(child);
-			child.initChildren = () => { throw new Error('xyz'); };
+			child[INIT_CHILDREN] = () => { throw new Error('xyz'); };
 			expect(
 				() => route.init()
 			).toThrowWithMessage(Error, 'xyz (router path /abc)');

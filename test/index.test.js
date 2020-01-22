@@ -8,7 +8,7 @@
 
 // Modules
 const Route = require('../index'),
-	{ROUTE_VERSION} = Route;
+	{ROUTE_VERSION, INIT_PROPS} = Route;
 
 // Init
 require('./support');
@@ -64,14 +64,14 @@ describe('Route class', () => { // eslint-disable-line jest/lowercase-name
 			expect(route.app).toBeUndefined();
 		});
 
-		it('calls `.initProps()` with props', () => {
+		it('calls `[INIT_PROPS]()` with props', () => {
 			class R2 extends Route {}
 			const props = {};
-			R2.prototype.initProps = spy(() => props);
+			R2.prototype[INIT_PROPS] = spy(() => props);
 			const route = new R2(props);
 
-			expect(route.initProps).toHaveBeenCalledTimes(1);
-			expect(route.initProps).toHaveBeenCalledWith(props);
+			expect(route[INIT_PROPS]).toHaveBeenCalledTimes(1);
+			expect(route[INIT_PROPS]).toHaveBeenCalledWith(props);
 		});
 
 		it('adds passed properties to route', () => {

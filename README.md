@@ -58,8 +58,8 @@ class MyRoute extends Route {
   myMethod() { /* ... */ }
 
   // Extending existing method
-  initRoute( app ) {
-    super.initRoute( app );
+  handle( app ) {
+    super.handle( app );
     /* ... */
   }
 }
@@ -67,21 +67,30 @@ class MyRoute extends Route {
 
 ### Methods
 
-`Route` has the following instance methods:
+`Route` has the following public instance methods:
 
-* [`.initProps( props )`](#initialization)
 * [`.init( app )`](#initialization)
-* [`.initRoute( app )`](#initialization)
-* [`.initChildren( app )`](#initialization)
 * [`.handle( req )`](#route-handle-req)
 * [`.attachChild( child )`](#building-a-router-tree)
-* [`.attachTo( parent )`](#attachto-parent)
-* [`.debugError( err )`](#debugging)
-* [`.debugZone( fn )`](#debugging)
 
-and one static method:
+and one public static method:
 
 * [`Route.extend( plugin )`](#plugins)
+
+It also has these instance methods intended for extension in routes/plugins:
+
+* [`[INIT_PROPS]( props )`](#initialization)
+* [`[INIT_ROUTE]( app )`](#initialization)
+* [`[INIT_CHILDREN]( app )`](#initialization)
+* [`[ATTACH_TO]( parent )`](#attach-to-parent)
+* [`[DEBUG_ZONE]( fn )`](#debugging)
+* [`[DEBUG_ERROR]( err )`](#debugging)
+
+The above are all symbols, accessible as properties of `@overlook/route`:
+
+```js
+const { INIT_PROPS } = require('@overlook/route');
+```
 
 ### Handling requests
 
@@ -124,7 +133,7 @@ const childOfChild = new Route();
 child.attachChild( childOfChild );
 ```
 
-#### `.attachTo( parent )`
+#### `[ATTACH_TO]( parent )`
 
 This method should not be called directly. It is called by `.attachChild()`.
 
@@ -142,22 +151,24 @@ Properties can be added via the constructor, or manually, but often the route wi
 
 `app` is the Overlook app, and contains global state.
 
-`.init()` will call `.initRoute()`, followed by `.initChildren()`. `.initChildren()` will call the `.init()` method of all children in series. So calling `.init()` on the root route will cause `.init()` to be called on all routes in the whole router tree.
+`.init()` will call `[INIT_ROUTE]()`, followed by `[INIT_CHILDREN]()`. `[INIT_CHILDREN]()` will call the `.init()` method of all children in series. So calling `.init()` on the root route will cause `.init()` to be called on all routes in the whole router tree.
 
-`.init()` should not be extended in subclasses - extend `.initRoute()` or `.initChildren()` instead.
+`.init()` should not be extended in subclasses - extend `[INIT_ROUTE]()` or `[INIT_CHILDREN]()` instead.
 
-#### `.initRoute( app )`
+#### `[INIT_ROUTE]( app )`
 
 Should not be called directly. Is called automatically by `.init()`.
 
-The `.initRoute()` method provided by `Route` class does nothing.
+The `[INIT_ROUTE]()` method provided by `Route` class does nothing.
 
-To add init actions to your route, extend `.initRoute()`:
+To add init actions to your route, extend `[INIT_ROUTE]()`:
 
 ```js
+const {INIT_ROUTE} = Route;
+
 class MyRoute extends Route {
-  initRoute( app ) {
-    super.initRoute( app );
+  [INIT_ROUTE]( app ) {
+    super[INIT_ROUTE]( app );
     /* ... */
   }
 }
@@ -165,16 +176,18 @@ class MyRoute extends Route {
 const route = new MyRoute();
 ```
 
-#### `.initChildren( app )`
+#### `[INIT_CHILDREN]( app )`
 
 Should not be called directly. Is called automatically by `.init()`.
 
 It is exposed for extension in subclasses where there is some initialization which needs to happen after all children are initialized.
 
 ```js
+const {INIT_CHILDREN} = Route;
+
 class MyRoute extends Route {
-  initChildren( app ) {
-    super.initChildren( app );
+  [INIT_CHILDREN]( app ) {
+    super[INIT_CHILDREN]( app );
 
     // Children are initialized now
     /* ... */
@@ -182,26 +195,28 @@ class MyRoute extends Route {
 }
 ```
 
-Extend `.initRoute()` instead if the action doesn't require the children to be initialized.
+Extend `[INIT_ROUTE]()` instead if the action doesn't require the children to be initialized.
 
-#### `.initProps( props )`
+#### `[INIT_PROPS]( props )`
 
 Should not be called directly. Is called automatically by class constructor *before* any properties provided to constructor are added to the route object.
 
-`.initProps()` can be extended to initialize properties to `undefined`, to ensure all route objects are the same "shape", allowing Javscript engines to better optimize.
+`[INIT_PROPS]()` can be extended to initialize properties to `undefined`, to ensure all route objects are the same "shape", allowing Javscript engines to better optimize.
 
-It **should not** be used to set default values. Do that in `.initRoute()` instead.
+It **should not** be used to set default values. Do that in `[INIT_ROUTE]()` instead.
 
 ```js
+const {INIT_PROPS} = Route;
+
 class MyRoute extends Route {
-  initProps( props ) {
-    super.initProps( props );
+  [INIT_PROPS]( props ) {
+    super[INIT_PROPS]( props );
     // Initialize to undefined
     this.myProp = undefined;
   }
 
-  initRoute( app ) {
-    super.initRoute( app );
+  [INIT_ROUTE]( app ) {
+    super[INIT_ROUTE]( app );
     // Set default if not defined
     if (this.myProp === undefined) this.myProp = 1;
   }
@@ -329,7 +344,7 @@ This is not very helpful for debugging.
 
 #### Solution
 
-`Route` instances have 2 methods which add debug info to errors, `.debugError()` and `.debugZone()`.
+`Route` instances have 2 methods which add debug info to errors, `[DEBUG_ZONE]()` and `[DEBUG_ERROR]()`.
 
 Any errors thrown will be tagged with:
 
@@ -342,23 +357,25 @@ Any errors thrown will be tagged with:
 
 These methods are already built in to `.init()` and `.attachChild()`.
 
-Any error thrown in `.init()`, `.initRoute()`, `.initChildren()`, `.attachChild()` or `.attachTo()` will be caught and tagged with debug info as above. You don't need to use the debug methods to get the debug info.
+Any error thrown in `.init()`, `[INIT_ROUTE]()`, `[INIT_CHILDREN]()`, `.attachChild()` or `[ATTACH_TO]()` will be caught and tagged with debug info as above. You don't need to use the debug methods to get the debug info.
 
-If you create a plugin which passes control from one route to another - for example, delegating to children - use `.debugZone()` to wrap that call (see [below](#debugzone-fn)).
+If you create a plugin which passes control from one route to another - for example, delegating to children - use `[DEBUG_ZONE]()` to wrap that call (see [below](#debug-zone-fn)).
 
-If you create a plugin which could provide some additional debug info, use `.debugError()` to add that info to the error object (see [below](#debugerror-err)).
+If you create a plugin which could provide some additional debug info, use `[DEBUG_ERROR]()` to add that info to the error object (see [below](#debug-error-err)).
 
 #### When not to use these methods
 
 It's only required where contol passed from one route to another. Mostly you won't be doing that, so generally there's no need to use the debug methods.
 
-#### `.debugZone( fn )`
+#### `[DEBUG_ZONE]( fn )`
 
 Executes a function within debug context of the route. Any errors thrown will be tagged with the debug info for that route.
 
 If you want to extend `.handle()` to delegate handling requests to the route's children:
 
 ```js
+const {DEBUG_ZONE} = Route;
+
 class MyRoute extends Route {
   handle( req ) {
     let res = super.handle( req );
@@ -366,7 +383,7 @@ class MyRoute extends Route {
 
     // First child which returns non-null value has handled request
     for (let child of this.children) {
-      res = child.debugZone( () => {
+      res = child[DEBUG_ZONE]( () => {
         return child.handle( req );
       } );
       if (res != null) break;
@@ -377,20 +394,21 @@ class MyRoute extends Route {
 }
 ```
 
-#### `.debugError( err )`
+#### `[DEBUG_ERROR]( err )`
 
-`.debugError()` is called by `.debugZone()` with any error which occurs in the route. `.debugError()` adds debug info to the error (as described above).
+`[DEBUG_ERROR]()` is called by `[DEBUG_ZONE]()` with any error which occurs in the route. `[DEBUG_ERROR]()` adds debug info to the error (as described above).
 
-You can extend `.debugError()` to add further debugging info.
+You can extend `[DEBUG_ERROR]()` to add further debugging info.
 
 ```js
+const {DEBUG_ERROR} = Route;
 const FILE_PATH = Symbol('FILE_PATH');
 
 class MyRoute extends Route {
   // ... some methods which define this[FILE_PATH] ...
 
-  debugError( err ) {
-    err = super.debugError( err );
+  [DEBUG_ERROR]( err ) {
+    err = super[DEBUG_ERROR]( err );
     err[FILE_PATH] = this[FILE_PATH];
     err.message += ` (file path ${this[FILE_PATH]})`;
     return err;
