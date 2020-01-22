@@ -8,7 +8,7 @@
 
 // Modules
 const Route = require('../index'),
-	{IDENTIFIER} = Route;
+	{ROUTE_VERSION} = Route;
 
 // Init
 require('./support');
@@ -23,7 +23,7 @@ describe('Route class', () => { // eslint-disable-line jest/lowercase-name
 	});
 
 	describe('exports symbols', () => {
-		it.each([['IDENTIFIER'], ['ROUTER_PATH']])(
+		it.each([['ROUTE_VERSION'], ['ROUTER_PATH']])(
 			'%s',
 			(key) => {
 				expect(typeof Route[key]).toBe('symbol');
@@ -31,9 +31,13 @@ describe('Route class', () => { // eslint-disable-line jest/lowercase-name
 		);
 	});
 
-	it('instances have identifier symbol', () => {
+	it('has version symbol', () => {
+		expect(Route[ROUTE_VERSION]).toBeString();
+	});
+
+	it('instances have version symbol', () => {
 		const route = new Route();
-		expect(route[IDENTIFIER]).toBeTrue();
+		expect(route[ROUTE_VERSION]).toBeString();
 	});
 
 	describe('constructor', () => {
