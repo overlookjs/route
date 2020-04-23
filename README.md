@@ -73,9 +73,11 @@ class MyRoute extends Route {
 * [`.handle( req )`](#route-handle-req)
 * [`.attachChild( child )`](#building-a-router-tree)
 
-and one public static method:
+and public static methods:
 
 * [`Route.extend( plugin )`](#plugins)
+* [`Route.isRoute( maybeRoute )`](#isRoute)
+* [`Route.isRouteClass( maybeRouteClass )`](#isRouteClass)
 
 It also has these instance methods intended for extension in routes/plugins:
 
@@ -331,6 +333,16 @@ const RouteSubclass1 = Route.extend( loggingPlugin );
 const RouteSubclass2 = Route.extend( loggingPlugin );
 RouteSubclass1 === RouteSubclass2 // -> true
 ```
+
+### Type checking
+
+#### `isRoute()`
+
+Pass an object to determine if it's a Route instance (including instances of a subclass of Route).
+
+#### `isRouteClass()`
+
+Pass a function to determine if it's a Route class (including subclasses of Route).
 
 ### Debugging
 
