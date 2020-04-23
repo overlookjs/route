@@ -98,7 +98,7 @@ const { INIT_PROPS } = require('@overlook/route');
 
 #### `route.handle( req )`
 
-`route.handle()` is used to ask the route to handle a request.
+`route.handle()` is an async function used to ask the route to handle a request.
 
 The `.handle()` method provided by `Route` class does nothing and returns `null`.
 
@@ -262,9 +262,9 @@ const Plugin = require('@overlook/plugin');
 
 const loggingPlugin = new Plugin( Route => (
   class extends Route {
-    handle( req ) {
+    async handle( req ) {
       console.log(`Handling request ${req.path}`);
-      const res = super.handle( req );
+      const res = await super.handle( req );
       console.log(`Handled request ${req.path}`);
       return res;
     }
