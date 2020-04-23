@@ -7,14 +7,14 @@
 'use strict';
 
 // Modules
-const Route = require('../index'),
+const Route = require('../index.js'),
 	{ROUTER_PATH, DEBUG_ZONE, DEBUG_ERROR} = Route;
 
 // Imports
-const {tryCatch, rejectionReason} = require('./support/utils');
+const {tryCatch, rejectionReason} = require('./support/utils.js');
 
 // Init
-require('./support');
+require('./support/index.js');
 
 // Tests
 

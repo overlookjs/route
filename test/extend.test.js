@@ -8,10 +8,10 @@
 
 // Modules
 const Plugin = require('@overlook/plugin'),
-	Route = require('../index');
+	Route = require('../index.js');
 
 // Init
-require('./support');
+require('./support/index.js');
 
 const spy = jest.fn;
 

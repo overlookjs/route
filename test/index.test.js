@@ -7,11 +7,11 @@
 'use strict';
 
 // Modules
-const Route = require('../index'),
+const Route = require('../index.js'),
 	{ROUTE_VERSION, INIT_PROPS} = Route;
 
 // Init
-require('./support');
+require('./support/index.js');
 
 const spy = jest.fn;
 

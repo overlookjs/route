@@ -7,10 +7,10 @@
 'use strict';
 
 // Modules
-const Route = require('../index');
+const Route = require('../index.js');
 
 // Init
-require('./support');
+require('./support/index.js');
 
 // Tests
 
