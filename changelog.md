@@ -1,5 +1,48 @@
 # Changelog
 
+## 0.4.1
+
+Features:
+
+* `isRoute` + `isRouteClass` static methods
+
+Changes:
+
+* Remove `[ROUTE_VERSION]` prop from prototype
+
+Dependencies:
+
+* Update `class-extension` dependency
+* Update `@overlook/plugin` dependency
+
+Refactor:
+
+* Fully specify require file paths
+
+Tests:
+
+* Import from package name [refactor]
+* Run tests on CI on Node v14
+* Run tests in dev mode
+
+No code:
+
+* File header comments
+
+Dev:
+
+* Update dev dependencies
+* Replace `.npmignore` with `files` list in `package.json`
+* `.editorconfig` config
+* Simplify Jest config
+* ESLint lint dot files
+* Remove unnecessary line from `.gitignore`
+
+Docs:
+
+* Update README
+* Add missing changelog
+
 ## 0.4.0
 
 Breaking changes:

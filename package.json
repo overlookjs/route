@@ -1,6 +1,6 @@
 {
   "name": "@overlook/route",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Overlook framework Route class",
   "main": "index.js",
   "files": [
