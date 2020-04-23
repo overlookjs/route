@@ -3,6 +3,9 @@
   "version": "0.4.0",
   "description": "Overlook framework Route class",
   "main": "index.js",
+  "files": [
+    "lib/**/*.js"
+  ],
   "author": {
     "name": "Overlook Motel"
   },
