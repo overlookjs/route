@@ -1,5 +1,51 @@
 # Changelog
 
+## 0.4.0
+
+Breaking changes:
+
+* `.extend` expects `@overlook/plugin` plugins
+* Key most methods by Symbols
+* Drop support for Node v8
+
+Performance:
+
+* Remove `debugZone` from `initChildren`
+
+Refactor:
+
+* Refactor `debugZone`
+
+Dependencies:
+
+* Update `has-own-prop` dependency
+* Update `@overlook/plugin` dependency
+* Switch `core-util-is` for `is-it-type`
+
+No code:
+
+* NPM ignore `.DS_Store` files
+
+Tests:
+
+* Fix `initChildren` errors test [fix]
+* Simplify unhandled rejection handling
+
+Dev:
+
+* Update dev dependencies
+* Run tests on CI on Node v13
+* Reformat Jest config
+* Remove `sudo` from Travis CI config
+* ESLint ignore coverage dir
+
+Docs:
+
+* Versioning policy
+* README example correction [fix]
+* README examples formatting [refactor]
+* Update license year
+
 ## 0.3.1
 
 Bug fixes:
