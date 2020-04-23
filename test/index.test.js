@@ -35,11 +35,6 @@ describe('Route class', () => { // eslint-disable-line jest/lowercase-name
 		expect(Route[ROUTE_VERSION]).toBeString();
 	});
 
-	it('instances have version symbol', () => {
-		const route = new Route();
-		expect(route[ROUTE_VERSION]).toBeString();
-	});
-
 	describe('constructor', () => {
 		it('initializes undefined name', () => {
 			const route = new Route();
