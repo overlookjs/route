@@ -7,7 +7,7 @@
 'use strict';
 
 // Modules
-const Route = require('../index.js'),
+const Route = require('@overlook/route'),
 	{ROUTER_PATH, DEBUG_ZONE, DEBUG_ERROR} = Route;
 
 // Imports

@@ -8,7 +8,7 @@
 
 // Modules
 const Plugin = require('@overlook/plugin'),
-	Route = require('../index.js');
+	Route = require('@overlook/route');
 
 // Init
 require('./support/index.js');

@@ -7,7 +7,7 @@
 'use strict';
 
 // Modules
-const Route = require('../index.js'),
+const Route = require('@overlook/route'),
 	{INIT_ROUTE, INIT_CHILDREN} = Route;
 
 // Init
