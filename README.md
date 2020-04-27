@@ -58,8 +58,8 @@ class MyRoute extends Route {
   myMethod() { /* ... */ }
 
   // Extending existing method
-  handle( app ) {
-    super.handle( app );
+  handle( req ) {
+    super.handle( req );
     /* ... */
   }
 }
