@@ -1,5 +1,29 @@
 # Changelog
 
+## 0.5.0
+
+Breaking changes:
+
+* `app` not passed to `.init` etc
+
+Features:
+
+* `.root` property
+
+Dependencies:
+
+* Update `is-promise` dependency
+
+Dev:
+
+* Update dev dependencies
+
+Docs:
+
+* Correct code example
+* Document `.parent` + `.children` properties
+* Remove reference to `Overlook` core
+
 ## 0.4.1
 
 Features:
