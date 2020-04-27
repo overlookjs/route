@@ -53,6 +53,18 @@ describe('`.init()`', () => {
 		expect(child.init).toHaveBeenCalledTimes(1);
 	});
 
+	it('sets `.root` as self on root', () => {
+		route.init();
+		expect(route.root).toBe(route);
+	});
+
+	it('sets `.root` to root on child', () => {
+		const child = new Route();
+		route.attachChild(child);
+		route.init();
+		expect(child.root).toBe(route);
+	});
+
 	describe('tags error thrown in `[INIT_ROUTE]()` with router path in', () => {
 		it('root route', () => {
 			route[INIT_ROUTE] = () => { throw new Error('xyz'); };

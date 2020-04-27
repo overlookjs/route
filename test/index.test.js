@@ -53,6 +53,12 @@ describe('Route class', () => { // eslint-disable-line jest/lowercase-name
 			expect(route.children).toBeArrayOfSize(0);
 		});
 
+		it('initializes undefined root', () => {
+			const route = new Route();
+			expect(route).toHaveProperty('root');
+			expect(route.root).toBeUndefined();
+		});
+
 		it('calls `[INIT_PROPS]()` with props', () => {
 			class R2 extends Route {}
 			const props = {};

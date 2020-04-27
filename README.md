@@ -236,6 +236,7 @@ Each route's relatives can be accessed via:
 
 * `.parent` - Parent route (`null` for root route)
 * `.children` - Array of child routes
+* `.root` - Root route
 
 ### Plugins
 
