@@ -11,7 +11,7 @@ Part of the [Overlook framework](https://overlookjs.github.io/).
 
 ## Abstract
 
-This module exports the base `Route` class, which all routes should be instances of. It is also exported as `Overlook.Route`.
+This module exports the base `Route` class, which all routes should be instances of.
 
 Overlook handles routes by building them in a tree. Each route can either handle a request itself or pass the request on to child routes to handle.
 
