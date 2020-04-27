@@ -232,6 +232,13 @@ routeWithDefaultProp.init();
 // routeWithDefaultProp.myProp === 1
 ```
 
+#### Properties
+
+Each route's relatives can be accessed via:
+
+* `.parent` - Parent route (`null` for root route)
+* `.children` - Array of child routes
+
 ### Plugins
 
 #### Introduction
