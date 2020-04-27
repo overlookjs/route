@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.1
+
+Docs:
+
+* Add missing changelog entry
+
 ## 0.5.0
 
 Breaking changes:
