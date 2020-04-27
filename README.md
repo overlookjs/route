@@ -69,7 +69,7 @@ class MyRoute extends Route {
 
 `Route` has the following public instance methods:
 
-* [`.init( app )`](#initialization)
+* [`.init()`](#initialization)
 * [`.handle( req )`](#route-handle-req)
 * [`.attachChild( child )`](#building-a-router-tree)
 
@@ -82,8 +82,8 @@ and public static methods:
 It also has these instance methods intended for extension in routes/plugins:
 
 * [`[INIT_PROPS]( props )`](#initialization)
-* [`[INIT_ROUTE]( app )`](#initialization)
-* [`[INIT_CHILDREN]( app )`](#initialization)
+* [`[INIT_ROUTE]()`](#initialization)
+* [`[INIT_CHILDREN]()`](#initialization)
 * [`[ATTACH_TO]( parent )`](#attach-to-parent)
 * [`[DEBUG_ZONE]( fn )`](#debugging)
 * [`[DEBUG_ERROR]( err )`](#debugging)
@@ -147,17 +147,15 @@ When a route is created, it is initially not linked to the router tree and must 
 
 Properties can be added via the constructor, or manually, but often the route will behave differently depending on what its parent is, or global state, which is only available once the router tree has been built.
 
-#### `.init( app )`
+#### `.init()`
 
 `.init()` should be called on the root route once the whole router tree is built.
-
-`app` is the Overlook app, and contains global state.
 
 `.init()` will call `[INIT_ROUTE]()`, followed by `[INIT_CHILDREN]()`. `[INIT_CHILDREN]()` will call the `.init()` method of all children in series. So calling `.init()` on the root route will cause `.init()` to be called on all routes in the whole router tree.
 
 `.init()` should not be extended in subclasses - extend `[INIT_ROUTE]()` or `[INIT_CHILDREN]()` instead.
 
-#### `[INIT_ROUTE]( app )`
+#### `[INIT_ROUTE]()`
 
 Should not be called directly. Is called automatically by `.init()`.
 
@@ -169,8 +167,8 @@ To add init actions to your route, extend `[INIT_ROUTE]()`:
 const {INIT_ROUTE} = Route;
 
 class MyRoute extends Route {
-  [INIT_ROUTE]( app ) {
-    super[INIT_ROUTE]( app );
+  [INIT_ROUTE]() {
+    super[INIT_ROUTE]();
     /* ... */
   }
 }
@@ -178,7 +176,7 @@ class MyRoute extends Route {
 const route = new MyRoute();
 ```
 
-#### `[INIT_CHILDREN]( app )`
+#### `[INIT_CHILDREN]()`
 
 Should not be called directly. Is called automatically by `.init()`.
 
@@ -188,8 +186,8 @@ It is exposed for extension in subclasses where there is some initialization whi
 const {INIT_CHILDREN} = Route;
 
 class MyRoute extends Route {
-  [INIT_CHILDREN]( app ) {
-    super[INIT_CHILDREN]( app );
+  [INIT_CHILDREN]() {
+    super[INIT_CHILDREN]();
 
     // Children are initialized now
     /* ... */
@@ -217,8 +215,8 @@ class MyRoute extends Route {
     this.myProp = undefined;
   }
 
-  [INIT_ROUTE]( app ) {
-    super[INIT_ROUTE]( app );
+  [INIT_ROUTE]() {
+    super[INIT_ROUTE]();
     // Set default if not defined
     if (this.myProp === undefined) this.myProp = 1;
   }

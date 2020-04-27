@@ -32,31 +32,25 @@ describe('`.init()`', () => {
 		expect(ret).toBeUndefined();
 	});
 
-	it('calls `[INIT_ROUTE]()` with value passed to `.init()`', () => {
+	it('calls `[INIT_ROUTE]()`', () => {
 		route[INIT_ROUTE] = spy();
-		const app = {};
-		route.init(app);
+		route.init();
 		expect(route[INIT_ROUTE]).toHaveBeenCalledTimes(1);
-		expect(route[INIT_ROUTE]).toHaveBeenCalledWith(app);
 	});
 
-	it('calls `[INIT_CHILDREN]()` with value passed to `.init()`', () => {
+	it('calls `[INIT_CHILDREN]()`', () => {
 		route[INIT_CHILDREN] = spy();
-		const app = {};
-		route.init(app);
+		route.init();
 		expect(route[INIT_CHILDREN]).toHaveBeenCalledTimes(1);
-		expect(route[INIT_CHILDREN]).toHaveBeenCalledWith(app);
 	});
 
-	it('calls `.init()` on children with value passed to `.init()`', () => {
+	it('calls `.init()` on children', () => {
 		const child = new Route();
 		child.init = spy();
 		route.attachChild(child);
 
-		const app = {};
-		route.init(app);
+		route.init();
 		expect(child.init).toHaveBeenCalledTimes(1);
-		expect(child.init).toHaveBeenCalledWith(app);
 	});
 
 	describe('tags error thrown in `[INIT_ROUTE]()` with router path in', () => {
