@@ -22,22 +22,6 @@ describe('Route class', () => { // eslint-disable-line jest/lowercase-name
 		expect(Route).toBeFunction();
 	});
 
-	describe('exports symbols', () => {
-		it.each([
-			'ROUTE_VERSION',
-			'ROUTER_PATH',
-			'INIT_PROPS',
-			'INIT_ROUTE',
-			'INIT_CHILDREN',
-			'IS_INITIALIZED',
-			'ATTACH_TO',
-			'DEBUG_ZONE',
-			'DEBUG_ERROR'
-		])('%s', (key) => {
-			expect(typeof Route[key]).toBe('symbol');
-		});
-	});
-
 	it('has version symbol', () => {
 		expect(Route[ROUTE_VERSION]).toBeString();
 	});

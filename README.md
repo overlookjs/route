@@ -92,6 +92,8 @@ The above are all symbols, accessible as properties of `@overlook/route`:
 
 ```js
 const { INIT_PROPS } = require('@overlook/route');
+// or
+import { INIT_PROPS } from '@overlook/route';
 ```
 
 ### Handling requests

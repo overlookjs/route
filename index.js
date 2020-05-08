@@ -1,5 +1,6 @@
 /* --------------------
  * @overlook/route module
+ * CJS entry point
  * ------------------*/
 
 'use strict';
