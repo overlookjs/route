@@ -23,12 +23,19 @@ describe('Route class', () => { // eslint-disable-line jest/lowercase-name
 	});
 
 	describe('exports symbols', () => {
-		it.each([['ROUTE_VERSION'], ['ROUTER_PATH']])(
-			'%s',
-			(key) => {
-				expect(typeof Route[key]).toBe('symbol');
-			}
-		);
+		it.each([
+			'ROUTE_VERSION',
+			'ROUTER_PATH',
+			'INIT_PROPS',
+			'INIT_ROUTE',
+			'INIT_CHILDREN',
+			'IS_INITIALIZED',
+			'ATTACH_TO',
+			'DEBUG_ZONE',
+			'DEBUG_ERROR'
+		])('%s', (key) => {
+			expect(typeof Route[key]).toBe('symbol');
+		});
 	});
 
 	it('has version symbol', () => {
