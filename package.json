@@ -20,7 +20,7 @@
     "@overlook/plugin": "^0.2.3",
     "@overlook/util-make-symbols": "^0.2.0",
     "class-extension": "^0.2.1",
-    "is-promise": "^3.0.0"
+    "is-promise": "^4.0.0"
   },
   "devDependencies": {
     "@overlookmotel/eslint-config": "^7.1.2",
