@@ -166,7 +166,7 @@ The `[INIT_ROUTE]()` method provided by `Route` class does nothing.
 To add init actions to your route, extend `[INIT_ROUTE]()`:
 
 ```js
-const {INIT_ROUTE} = Route;
+const { INIT_ROUTE } = Route;
 
 class MyRoute extends Route {
   [INIT_ROUTE]() {
@@ -185,7 +185,7 @@ Should not be called directly. Is called automatically by `.init()`.
 It is exposed for extension in subclasses where there is some initialization which needs to happen after all children are initialized.
 
 ```js
-const {INIT_CHILDREN} = Route;
+const { INIT_CHILDREN } = Route;
 
 class MyRoute extends Route {
   [INIT_CHILDREN]() {
@@ -208,7 +208,7 @@ Should not be called directly. Is called automatically by class constructor *bef
 It **should not** be used to set default values. Do that in `[INIT_ROUTE]()` instead.
 
 ```js
-const {INIT_PROPS} = Route;
+const { INIT_PROPS } = Route;
 
 class MyRoute extends Route {
   [INIT_PROPS]( props ) {
@@ -394,19 +394,19 @@ Executes a function within debug context of the route. Any errors thrown will be
 If you want to extend `.handle()` to delegate handling requests to the route's children:
 
 ```js
-const {DEBUG_ZONE} = Route;
+const { DEBUG_ZONE } = Route;
 
 class MyRoute extends Route {
   handle( req ) {
     let res = super.handle( req );
-    if (res) return res;
+    if ( res ) return res;
 
     // First child which returns non-null value has handled request
     for (let child of this.children) {
       res = child[DEBUG_ZONE]( () => {
         return child.handle( req );
       } );
-      if (res != null) break;
+      if ( res != null ) break;
     }
 
     return res;
@@ -421,7 +421,7 @@ class MyRoute extends Route {
 You can extend `[DEBUG_ERROR]()` to add further debugging info.
 
 ```js
-const {DEBUG_ERROR} = Route;
+const { DEBUG_ERROR } = Route;
 const FILE_PATH = Symbol('FILE_PATH');
 
 class MyRoute extends Route {
