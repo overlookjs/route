@@ -20,9 +20,9 @@ describe('`.handle()`', () => {
 		expect(route.handle).toBeFunction();
 	});
 
-	it('returns null', () => {
+	it('returns undefined', () => {
 		const route = new Route();
 		const ret = route.handle();
-		expect(ret).toBeNull();
+		expect(ret).toBeUndefined();
 	});
 });

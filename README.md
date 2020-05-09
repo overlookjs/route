@@ -102,7 +102,7 @@ import { INIT_PROPS } from '@overlook/route';
 
 `route.handle()` is an async function used to ask the route to handle a request.
 
-The `.handle()` method provided by `Route` class does nothing and returns `null`.
+The `.handle()` method provided by `Route` class does nothing and returns `undefined`.
 
 This method is intended to be extended in routes or plugins, to add functionality for the particular behavior of the route.
 
@@ -112,7 +112,7 @@ This method is intended to be extended in routes or plugins, to add functionalit
 
 #### Return value
 
-If the route does not handle the request (for example the request doesn't match a path that the route handles), it should return `null`.
+If the route does not handle the request (for example the request doesn't match a path that the route handles), it should return `undefined`.
 
 If it *does* handle the request (including handling by a child which it delegates to), it should return any value other than `null` and `undefined`.
 
@@ -399,14 +399,14 @@ const { DEBUG_ZONE } = Route;
 class MyRoute extends Route {
   handle( req ) {
     let res = super.handle( req );
-    if ( res != null ) return res;
+    if ( res !== undefined ) return res;
 
-    // First child which returns non-null value has handled request
+    // First child which returns value has handled request
     for (let child of this.children) {
       res = child[DEBUG_ZONE]( () => {
         return child.handle( req );
       } );
-      if ( res != null ) break;
+      if ( res !== undefined ) break;
     }
 
     return res;
