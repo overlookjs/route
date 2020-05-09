@@ -47,6 +47,28 @@ describe('.attachChild()', () => {
 		expect(child[ATTACH_TO]).toHaveBeenCalledWith(route);
 	});
 
+	describe('throws if passed', () => {
+		it('object', () => {
+			expect(() => route.attachChild({})).toThrowWithMessage(
+				Error,
+				'attachChild must be called with an instance of Route class - received [object Object] (router path /)'
+			);
+		});
+
+		it('Route class', () => { // eslint-disable-line jest/lowercase-name
+			expect(() => route.attachChild(Route)).toThrow(
+				/^attachChild must be called with an instance of Route class - received [\s\S]* \(router path \/\)$/
+			);
+		});
+
+		it('null', () => {
+			expect(() => route.attachChild(null)).toThrowWithMessage(
+				Error,
+				'attachChild must be called with an instance of Route class - received null (router path /)'
+			);
+		});
+	});
+
 	it('tags error thrown in `child[ATTACH_TO]()` with child router path', () => {
 		class RouteSubclass extends Route {
 			[ATTACH_TO](parent) {
