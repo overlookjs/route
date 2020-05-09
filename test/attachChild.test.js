@@ -62,30 +62,30 @@ describe('.attachChild()', () => {
 	});
 
 	describe('during/after initialization', () => {
-		it('does not throw error if called in [INIT_ROUTE]', () => {
+		it('does not throw error if called in [INIT_ROUTE]', async () => {
 			const child = new Route();
 			route[INIT_ROUTE] = function() {
 				this.attachChild(child);
 			};
-			route.init();
+			await route.init();
 
 			// Check child attached
 			expect(child.parent).toBe(route);
 		});
 
-		it('throws error if called in `[INIT_CHILDREN]`', () => {
+		it('throws error if called in `[INIT_CHILDREN]`', async () => {
 			const child = new Route();
 			route[INIT_CHILDREN] = function() {
 				this.attachChild(child);
 			};
 
-			expect(
-				() => route.init()
-			).toThrowWithMessage(Error, 'Cannot attach children after initialization (router path /)');
+			await expect(route.init()).rejects.toThrow(
+				new Error('Cannot attach children after initialization (router path /)')
+			);
 		});
 
-		it('throws error if called after parent initialized', () => {
-			route.init();
+		it('throws error if called after parent initialized', async () => {
+			await route.init();
 			const child = new Route();
 
 			expect(

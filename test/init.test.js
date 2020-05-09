@@ -7,7 +7,8 @@
 'use strict';
 
 // Modules
-const Route = require('@overlook/route'),
+const isPromise = require('is-promise'),
+	Route = require('@overlook/route'),
 	{INIT_ROUTE, INIT_CHILDREN} = Route;
 
 // Init
@@ -27,77 +28,75 @@ describe('`.init()`', () => {
 		expect(route.init).toBeFunction();
 	});
 
-	it('returns undefined', () => {
-		const ret = route.init();
+	it('returns promise', async () => {
+		const promise = route.init();
+		expect(isPromise(promise)).toBeTrue();
+		await promise;
+	});
+
+	it('returned promise resolves to undefined', async () => {
+		const ret = await route.init();
 		expect(ret).toBeUndefined();
 	});
 
-	it('calls `[INIT_ROUTE]()`', () => {
+	it('calls `[INIT_ROUTE]()`', async () => {
 		route[INIT_ROUTE] = spy();
-		route.init();
+		await route.init();
 		expect(route[INIT_ROUTE]).toHaveBeenCalledTimes(1);
 	});
 
-	it('calls `[INIT_CHILDREN]()`', () => {
+	it('calls `[INIT_CHILDREN]()`', async () => {
 		route[INIT_CHILDREN] = spy();
-		route.init();
+		await route.init();
 		expect(route[INIT_CHILDREN]).toHaveBeenCalledTimes(1);
 	});
 
-	it('calls `.init()` on children', () => {
+	it('calls `.init()` on children', async () => {
 		const child = new Route();
 		child.init = spy();
 		route.attachChild(child);
 
-		route.init();
+		await route.init();
 		expect(child.init).toHaveBeenCalledTimes(1);
 	});
 
-	it('sets `.root` as self on root', () => {
-		route.init();
+	it('sets `.root` as self on root', async () => {
+		await route.init();
 		expect(route.root).toBe(route);
 	});
 
-	it('sets `.root` to root on child', () => {
+	it('sets `.root` to root on child', async () => {
 		const child = new Route();
 		route.attachChild(child);
-		route.init();
+		await route.init();
 		expect(child.root).toBe(route);
 	});
 
 	describe('tags error thrown in `[INIT_ROUTE]()` with router path in', () => {
-		it('root route', () => {
+		it('root route', async () => {
 			route[INIT_ROUTE] = () => { throw new Error('xyz'); };
-			expect(
-				() => route.init()
-			).toThrowWithMessage(Error, 'xyz (router path /)');
+			await expect(route.init()).rejects.toThrow(new Error('xyz (router path /)'));
 		});
 
-		it('child route', () => {
+		it('child route', async () => {
 			const child = new Route({name: 'abc'});
 			route.attachChild(child);
 			child[INIT_ROUTE] = () => { throw new Error('xyz'); };
-			expect(
-				() => route.init()
-			).toThrowWithMessage(Error, 'xyz (router path /abc)');
+			await expect(route.init()).rejects.toThrow(new Error('xyz (router path /abc)'));
 		});
 	});
 
 	describe('tags error thrown in `[INIT_CHILDREN]()` with router path in', () => {
-		it('root route', () => {
+		it('root route', async () => {
 			route[INIT_CHILDREN] = () => { throw new Error('xyz'); };
-			expect(
-				() => route.init()
-			).toThrowWithMessage(Error, 'xyz (router path /)');
+			await expect(route.init()).rejects.toThrow(new Error('xyz (router path /)'));
 		});
 
-		it('child route', () => {
+		it('child route', async () => {
 			const child = new Route({name: 'abc'});
 			route.attachChild(child);
 			child[INIT_CHILDREN] = () => { throw new Error('xyz'); };
-			expect(
-				() => route.init()
-			).toThrowWithMessage(Error, 'xyz (router path /abc)');
+			await expect(route.init()).rejects.toThrow(new Error('xyz (router path /abc)'));
 		});
 	});
 });

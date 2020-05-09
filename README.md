@@ -151,9 +151,9 @@ Properties can be added via the constructor, or manually, but often the route wi
 
 #### `.init()`
 
-`.init()` should be called on the root route once the whole router tree is built.
+`.init()` is an async function. It should be called on the root route once the whole router tree is built.
 
-`.init()` will call `[INIT_ROUTE]()`, followed by `[INIT_CHILDREN]()`. `[INIT_CHILDREN]()` will call the `.init()` method of all children in series. So calling `.init()` on the root route will cause `.init()` to be called on all routes in the whole router tree.
+`.init()` will call `[INIT_ROUTE]()`, followed by `[INIT_CHILDREN]()`. `[INIT_CHILDREN]()` will call the `.init()` method of all children in parallel. So calling `.init()` on the root route will cause `.init()` to be called on all routes in the whole router tree.
 
 `.init()` should not be extended in subclasses - extend `[INIT_ROUTE]()` or `[INIT_CHILDREN]()` instead.
 
@@ -169,8 +169,8 @@ To add init actions to your route, extend `[INIT_ROUTE]()`:
 const { INIT_ROUTE } = Route;
 
 class MyRoute extends Route {
-  [INIT_ROUTE]() {
-    super[INIT_ROUTE]();
+  async [INIT_ROUTE]() {
+    await super[INIT_ROUTE]();
     /* ... */
   }
 }
@@ -188,8 +188,8 @@ It is exposed for extension in subclasses where there is some initialization whi
 const { INIT_CHILDREN } = Route;
 
 class MyRoute extends Route {
-  [INIT_CHILDREN]() {
-    super[INIT_CHILDREN]();
+  async [INIT_CHILDREN]() {
+    await super[INIT_CHILDREN]();
 
     // Children are initialized now
     /* ... */
@@ -217,8 +217,8 @@ class MyRoute extends Route {
     this.myProp = undefined;
   }
 
-  [INIT_ROUTE]() {
-    super[INIT_ROUTE]();
+  async [INIT_ROUTE]() {
+    await super[INIT_ROUTE]();
     // Set default if not defined
     if (this.myProp === undefined) this.myProp = 1;
   }
@@ -228,7 +228,7 @@ const routeWithDefinedProp = new MyRoute( { myProp: 2 } );
 // routeWithDefinedProp.myProp === 2
 
 const routeWithDefaultProp = new MyRoute();
-routeWithDefaultProp.init();
+await routeWithDefaultProp.init();
 // routeWithDefaultProp.myProp === 1
 ```
 
