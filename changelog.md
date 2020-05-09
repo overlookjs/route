@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.6.1
+
+Bug fixes:
+
+* `.attachChild` accept route from any constructor
+
 ## 0.6.0
 
 Breaking changes:
