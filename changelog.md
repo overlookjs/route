@@ -1,5 +1,33 @@
 # Changelog
 
+## 0.6.0
+
+Breaking changes:
+
+* Init methods are async
+* `.extend` check for valid plugin with `Plugin.isPlugin`
+
+Features:
+
+* ESM export
+
+Tests:
+
+* Test all symbols exported
+
+Dependencies:
+
+* Update `is-promise` dependency
+
+Dev:
+
+* Update dev dependencies
+
+Docs:
+
+* Correct example
+* Code formatting
+
 ## 0.5.1
 
 Docs:
