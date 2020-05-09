@@ -399,7 +399,7 @@ const { DEBUG_ZONE } = Route;
 class MyRoute extends Route {
   handle( req ) {
     let res = super.handle( req );
-    if ( res ) return res;
+    if ( res != null ) return res;
 
     // First child which returns non-null value has handled request
     for (let child of this.children) {
