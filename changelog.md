@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.6.3
+
+Dependencies:
+
+* Update dependencies
+
+Tests:
+
+* Code coverage cover ESM export
+
+Dev:
+
+* Lint `.mjs` files
+* `test-prod` NPM script
+* Update dev dependencies
+
 ## 0.6.2
 
 Improvements:
