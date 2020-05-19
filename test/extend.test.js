@@ -22,12 +22,12 @@ describe('`Route.extend()`', () => {
 		expect(Route.extend).toBeFunction();
 	});
 
-	it('calls extend function with Route', () => {
+	it('calls extend function with Route and plugin', () => {
 		const extend = spy(R => R),
 			plugin = new Plugin(extend);
 		Route.extend(plugin);
 		expect(extend).toHaveBeenCalledTimes(1);
-		expect(extend).toHaveBeenCalledWith(Route);
+		expect(extend).toHaveBeenCalledWith(Route, plugin);
 	});
 
 	it('returns result of extend function', () => {
@@ -35,6 +35,17 @@ describe('`Route.extend()`', () => {
 		const plugin = new Plugin(() => R2);
 		const res = Route.extend(plugin);
 		expect(res).toBe(R2);
+	});
+
+	it("applies plugin's dependent plugins", () => {
+		const plugin1 = new Plugin(R => class extends R {method1() { this.prop1 = 123; }});
+		const plugin2 = new Plugin([plugin1], R => class extends R {method2() { this.prop2 = 456; }});
+		const R = Route.extend(plugin2);
+		const route = new R();
+		route.method1();
+		route.method2();
+		expect(route.prop1).toBe(123);
+		expect(route.prop2).toBe(456);
 	});
 
 	it('throws if not passed valid plugin', () => {

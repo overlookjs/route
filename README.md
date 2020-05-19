@@ -304,16 +304,13 @@ const RouteWithLoggingAndAuth =
 
 #### Plugins extending other plugins
 
-Plugins can themselves utilise other plugins, using `.extend()`.
+Plugins can themselves utilise other plugins, by providing an array of other plugins to the `Plugin` constructor.
 
 ```js
-const myPlugin = new Plugin( (Route) => {
-  const RouteWithLogging = Route.extend( loggingPlugin );
-
-  return class extends RouteWithLogging {
-    /* ... other extensions ... */
-  };
-} );
+const myPlugin = new Plugin(
+  [ loggingPlugin ],
+  Route => class extends Route { /* ... */ }
+);
 ```
 
 #### Optimizations
