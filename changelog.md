@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.6.4
+
+Dependencies:
+
+* Update `@overlook/plugin` dependency
+* Update `class-extension` dependency
+
+Dev:
+
+* Update dev dependencies
+
 ## 0.6.3
 
 Dependencies:
