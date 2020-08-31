@@ -17,7 +17,7 @@ require('./support/index.js');
 
 // Tests
 
-describe('CJS export', () => { // eslint-disable-line jest/lowercase-name
+describe('CJS export', () => {
 	it('is a class', () => {
 		expect(Route).toBeFunction();
 	});

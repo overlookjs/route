@@ -17,7 +17,7 @@ const spy = jest.fn;
 
 // Tests
 
-describe('Route class', () => { // eslint-disable-line jest/lowercase-name
+describe('Route class', () => {
 	it('is a class', () => {
 		expect(Route).toBeFunction();
 	});

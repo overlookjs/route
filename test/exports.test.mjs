@@ -15,7 +15,7 @@ import './support/index.js';
 
 // Tests
 
-describe('ESM export', () => { // eslint-disable-line jest/lowercase-name
+describe('ESM export', () => {
 	it('default export is a class', () => {
 		expect(Route).toBeFunction();
 	});
