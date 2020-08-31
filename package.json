@@ -27,7 +27,7 @@
     "url": "https://github.com/overlookjs/route/issues"
   },
   "dependencies": {
-    "@overlook/plugin": "^0.3.0",
+    "@overlook/plugin": "^0.4.1",
     "@overlook/util-make-symbols": "^0.2.2",
     "class-extension": "^0.3.2",
     "is-promise": "^4.0.0"
