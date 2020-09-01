@@ -382,7 +382,7 @@ If you create a plugin which could provide some additional debug info, use `[DEB
 
 #### When not to use these methods
 
-It's only required where contol passed from one route to another. Mostly you won't be doing that, so generally there's no need to use the debug methods.
+It's only required where contol passes from one route to another. Mostly you won't be doing that, so generally there's no need to use the debug methods.
 
 #### `[DEBUG_ZONE]( fn )`
 
