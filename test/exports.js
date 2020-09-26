@@ -30,7 +30,9 @@ module.exports = function itExports(Route) {
 			'IS_INITIALIZED',
 			'ATTACH_TO',
 			'DEBUG_ZONE',
-			'DEBUG_ERROR'
+			'DEBUG_ERROR',
+			'PLUGINS',
+			'NAMED_PLUGINS'
 		])('%s', (key) => {
 			expect(typeof Route[key]).toBe('symbol');
 		});
