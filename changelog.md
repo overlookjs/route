@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.6.5
+
+Features:
+
+* Export `PLUGINS` + `NAMED_PLUGINS` Symbols
+
+Deps:
+
+* Update `class-extension` dependency
+
 ## 0.6.4
 
 Dependencies:
